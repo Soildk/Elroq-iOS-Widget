@@ -1,12 +1,13 @@
 // Config
 const HA_URL = "https://ha-url.com";
-const TOKEN = Keychain.get("Scriptable");
+const TOKEN = Keychain.get("HaToken");
 
 const carImageUrl = "https://ha-url.com/local/images/Elroq_side.png";
 const carCableUrl = "https://ha-url.com/local/images/Elroq_cablewhite.png";
 const carChargingUrl = "https://ha-url.com/local/images/Elroq_charging.png";
 
-var widget;
+var widget = new ListWidget();
+widget.setPadding(22, 12, 12, 12);
 
 // Sensor
 async function fetchSensor(entityId) {
@@ -69,8 +70,7 @@ async function addTwoColouredRow(firstText, secondText) {
 // Widget
 async function createWidget() {
     let imageUrl;
-    widget = new ListWidget();
-    widget.setPadding(22, 12, 12, 12);
+   
 
     // Check the charging state
     let chargingState = await getEntityValue("sensor.skoda_elroq_charging_state");
@@ -102,7 +102,7 @@ async function createWidget() {
     let outsideTemperature = await getEntityValue("sensor.skoda_elroq_outside_temperature");
 
     let lastChargedPercentage = await getEntityValue("input_text.last_charged_percentage");
-    let lastChargedMileage = await getEntityValue("input_text.last_charged_mileagenew");
+    let lastChargedMileage = await getEntityValue("input_text.last_charged_mileage");
 
     const batteryUsed = lastChargedPercentage - currentPercentage;
     const distanceDriven = currentMileage - lastChargedMileage;
